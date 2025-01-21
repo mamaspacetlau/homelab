@@ -9,8 +9,6 @@ services:
     volumes:
       - ${HEDGEDOC_VOLUME}:/var/lib/postgresql/data
     restart: always
-    env_file:
-      - .env
   app:
     # Make sure to use the latest release from https://hedgedoc.org/latest-release
     image: quay.io/hedgedoc/hedgedoc:latest
@@ -25,8 +23,6 @@ services:
     restart: always
     depends_on:
       - database
-    env_file:
-      - .env
 volumes:
   database:
   uploads:
