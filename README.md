@@ -1,4 +1,14 @@
 # Welcome to Space Homelab!
 ## List of docker compose
 
- - **[Affine](https://affine.pro/)** - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/affine)![AFFiNE.Pro](https://camo.githubusercontent.com/b51dc4d64274eb02436b7087639b34eb6708d07128a010a8d7bf0a6e633fbd95/68747470733a2f2f63646e2e616666696e652e70726f2f4769746875625f6865726f5f696d616765312e706e67)
+ - **[Affine](https://affine.pro/)** - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/affine)
+ - **[ByteStash](https://github.com/jordan-dalby/ByteStash)** - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/bytestash)
+ - **[DocMost](https://docmost.com/)** - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/docmost)
+ - Downloader - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/downloader)
+ - [Ghost](https://ghost.org/) - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/ghost)
+ - [HedgeDoc](https://hedgedoc.org/) - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/hedgedoc)
+ - [InvoicePlane](https://invoiceplane.com) - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/invoiceplane)
+ - [Penpot](https://penpot.app) - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/penpot)
+ - [Pingvin](https://github.com/stonith404/pingvin-share) - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/pingvin)
+ - Stream Suite - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/stream-suite)
+ - Watcherr - [Docker Compose file](https://github.com/mamaspacetlau/homelab/tree/main/watcherr)
