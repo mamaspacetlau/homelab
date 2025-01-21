@@ -1,0 +1,24 @@
+services:
+  web:
+    image: mhzawadi/invoiceplane # Replace with your custom image or use "mhzawadi/invoiceplane"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      IP_URL: ${URL}
+    ports:
+      - 8983:80
+    volumes:
+      - ${CONFIG}/invoiceplane:/var/www/html/uploads
+    depends_on:
+      - db
+    restart: unless-stopped
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
