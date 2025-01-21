@@ -1,0 +1,39 @@
+services:
+# a simple server for sending and receiving messages
+  gotify:
+    image: gotify/server
+    container_name: gotify
+    restart: unless-stopped
+    ports:
+      - 8009:80
+    volumes:
+      - '${CONFIG}/gotify:/app/data'
+    environment:
+      GOTIFY_DEFAULTUSER_PASS: 'admin'
+    # to run gotify as a dedicated user:
+    # sudo chown -R 1234:1234 ./gotify
+    # user: "1234:1234"
+
+  # solution for automating Docker container base image updates
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=${TZ}
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE=0 0 12 * * * # schedule to scan at 12 AM everyday
+      - WATCHTOWER_NOTIFICATION_REPORT=true
+      - WATCHTOWER_NOTIFICATIONS=gotify
+      - WATCHTOWER_NOTIFICATION_GOTIFY_URL=${GOTIFY_URL}
+      - WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN=${GOTIFY_TOKEN}
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: louislam/uptime-kuma:latest
+    restart: always
+    ports:
+      - 3001:3001
+    volumes:
+      - ${CONFIG}/uptime-kuma:/app/data
