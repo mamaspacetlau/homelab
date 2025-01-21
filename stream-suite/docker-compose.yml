@@ -1,0 +1,311 @@
+services:
+  # ultimate indexer manager
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    ports:
+      - 9696:9696
+    volumes:
+      - ${CONFIG}/prowlarr:/config
+      - ${MEDIA_PATH}:/media/  # Use the MEDIA_PATH variable
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+  # Movie Indexer  
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    ports:
+      - 7878:7878
+    volumes:
+      - ${CONFIG}/radarr:/config
+      - ${MEDIA_PATH}:/media  # Use the MEDIA_PATH variable
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+  # Series Indexer
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: unless-stopped
+    ports:
+      - 8989:8989
+    volumes:
+      - ${CONFIG}/sonarr:/config
+      - ${MEDIA_PATH}:/media  # Use the MEDIA_PATH variable
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+  # subtitle
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: unless-stopped
+    ports:
+      - 6767:6767
+    volumes:
+      - ${CONFIG}/bazarr/:/config
+      - ${MEDIA_PATH}:/media
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}    
+  # notification
+  notifiarr:
+    image: golift/notifiarr:latest
+    container_name: notifiarr
+    hostname: notifiarr
+    restart: unless-stopped
+    ports:
+      - 5454:5454
+    volumes:
+      - ${CONFIG}/notifiarr:/config
+      - /var/run/utmp:/var/run/utmp
+      - /etc/machine-id:/etc/machine-id    
+  whisparr:
+    container_name: whisparr
+    image: ghcr.io/hotio/whisparr:v3
+    restart: unless-stopped
+    ports:
+      - 6969:6969
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+    volumes:
+      - ${CONFIG}/whisparr:/config
+      - ${MEDIA_PATH}:/media        
+  # jellyfin user management
+  wizarr:
+    container_name: wizarr
+    image: ghcr.io/wizarrrr/wizarr:latest
+    restart: unless-stopped
+    volumes:
+      - ${MEDIA_PATH}/wizarr:/data/database
+    ports:
+      - 5690:5690
+  # custom format
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:latest
+    container_name: recyclarr
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG}/recyclarr:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+  # discord request bot
+  requestrr:
+    container_name: requestrr
+    image: ghcr.io/hotio/requestrr
+    restart: unless-stopped
+    ports:
+      - 4545:4545
+    volumes:
+      - ${CONFIG}/requestrr:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+  # dashboard for web apps
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    ports:
+      - 7575:7575
+    volumes:
+      - ${CONFIG}/homarr/config:/app/data/configs
+      - ${CONFIG}/homarr/icons:/app/public/icons
+      - ${CONFIG}/homarr/data:/data
+  # proxy server to bypass Cloudflare protection
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    ports:
+      - 8191:8191
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=${TZ}      
+  # works as a proxy server
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    restart: unless-stopped
+    ports:
+      - 9117:9117
+    volumes:
+      - ${CONFIG}/jackett:/config
+      - ${MEDIA_PATH}:/media
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - AUTO_UPDATE=true #optional
+      - RUN_OPTS= #optional
+  # media streaming
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    restart: unless-stopped
+    ports:
+      - 32400:32400
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VERSION=docker
+      - PLEX_CLAIM=32400
+    volumes:
+      - ${CONFIG}/plex/library:/config
+      - ${MEDIA_PATH}/series:/tv
+      - ${MEDIA_PATH}/movies:/movies  
+  # media request management for plex
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    restart: unless-stopped
+    ports:
+      - 5056:5055
+    volumes:
+      - ${CONFIG}/overseerr:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+  # monitoring, analytics and notifications for Plex
+  tautulli:
+    image: ghcr.io/tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG}/tautulli:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - 8181:8181
+  # media streaming
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - 8096:8096
+    volumes:
+      - ${CONFIG}/jellyfin:/config
+      - ${MEDIA_PATH}:/media  # Use the MEDIA_PATH variable
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+  # media request management for jellyfin
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    restart: unless-stopped
+    ports:
+      - 5055:5055
+    volumes:
+      - ${CONFIG}/jellyseerr/:/app/config
+    environment:
+      - TZ=${TZ}    
+  # media management
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: unless-stopped
+    ports:
+      - 9999:9999
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+    volumes:
+      - ${MEDIA_PATH}:/media
+      - /etc/localtime:/etc/localtime:ro     
+      - ${CONFIG}/stashapp/config:/root/.stash
+      - ${CONFIG}/stashapp/data:/data
+      - ${CONFIG}/stashapp/metadata:/metadata
+      - ${CONFIG}/stashapp/cache:/cache
+      - ${CONFIG}/stashapp/blobs:/blobs
+      - ${CONFIG}/stashapp/generated:/generated
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      - STASH_PORT=9999  
+  # library optimiser
+  unmanic:
+    container_name: unmanic
+    image: josh5/unmanic:latest
+    restart: unless-stopped
+    ports:
+      - 8888:8888
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${MEDIA_PATH}:/media
+      - ${CONFIG}/unmanic/config:/config
+      - ${CONFIG}/unmanic/library:/library
+      - ${CONFIG}/unmanic/cache:/tmp/unmanic    
+  # clean ui for jellyfin, tmdb, sonarr and radarr. alternative to overserr or jellyseer
+  reiverr:
+    image: ghcr.io/aleksilassila/reiverr:latest
+    container_name: reiverr
+    restart: unless-stopped
+    ports:
+      - 9595:9494
+    volumes:
+      - ${CONFIG}/reiverr:/config
+    environment:
+      - SECRET=your_secret_here # optional, used to sign JWT tokens for authentication. If not set, sessions will not persist between server restarts. Use a random string.
+      - ADMIN_USERNAME=admin # optional
+      - ADMIN_PASSWORD=admin # optional
+  # sync your plex, jellyfin and emby play state
+  watchstate:
+    image: ghcr.io/arabcoders/watchstate:latest
+    container_name: watchstate
+    restart: unless-stopped
+    user: 0:0 # Run as root user
+    ports:
+      - 8085:8080 # The port which will serve WebUI + API + Webhooks
+    volumes:
+      - ${CONFIG}/watchstate:/config # mount current directory to container /config
+  # discord request movies/series
+  doplarr:
+    container_name: doplarr
+    image: lscr.io/linuxserver/doplarr:latest
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG}/doplarr:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      - SONARR__URL=${SONARR_URL}
+      - RADARR__URL=${RADARR_URL}
+      - SONARR__API=${SONARR_API}
+      - RADARR__API=${RADARR_API}
+      - DISCORD__TOKEN=${DISCORD_WEBHOOK}
