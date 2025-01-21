@@ -1,5 +1,3 @@
-name: affine
-
 services:
   affine:
     image: ghcr.io/toeverything/affine-graphql:${AFFINE_REVISION:-stable}
