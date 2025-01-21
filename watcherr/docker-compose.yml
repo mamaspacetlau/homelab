@@ -1,5 +1,18 @@
 services:
-# a simple server for sending and receiving messages
+  ntfy:
+    image: binwiederhier/ntfy
+    container_name: ntfy
+    command: serve
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG}/ntfy/cache:/var/cache/ntfy
+      - ${CONFIG}/ntfy/config:/etc/ntfy
+    ports:
+      - 7200:80
+    restart: unless-stopped
+  
+  # a simple server for sending and receiving messages
   gotify:
     image: gotify/server
     container_name: gotify
