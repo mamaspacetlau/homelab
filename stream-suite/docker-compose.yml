@@ -8,7 +8,7 @@ services:
       - 9696:9696
     volumes:
       - ${CONFIG}/prowlarr:/config
-      - ${MEDIA_PATH}:/media/  # Use the MEDIA_PATH variable
+      - ${MEDIA_PATH}:/media/ # Use the MEDIA_PATH variable
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -22,7 +22,7 @@ services:
       - 7878:7878
     volumes:
       - ${CONFIG}/radarr:/config
-      - ${MEDIA_PATH}:/media  # Use the MEDIA_PATH variable
+      - ${MEDIA_PATH}:/media # Use the MEDIA_PATH variable
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -36,7 +36,7 @@ services:
       - 8989:8989
     volumes:
       - ${CONFIG}/sonarr:/config
-      - ${MEDIA_PATH}:/media  # Use the MEDIA_PATH variable
+      - ${MEDIA_PATH}:/media # Use the MEDIA_PATH variable
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -54,7 +54,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=${TZ}    
+      - TZ=${TZ}
   # notification
   notifiarr:
     image: golift/notifiarr:latest
@@ -66,7 +66,7 @@ services:
     volumes:
       - ${CONFIG}/notifiarr:/config
       - /var/run/utmp:/var/run/utmp
-      - /etc/machine-id:/etc/machine-id    
+      - /etc/machine-id:/etc/machine-id
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr:v3
@@ -80,7 +80,7 @@ services:
       - UMASK=002
     volumes:
       - ${CONFIG}/whisparr:/config
-      - ${MEDIA_PATH}:/media        
+      - ${MEDIA_PATH}:/media
   # jellyfin user management
   wizarr:
     container_name: wizarr
@@ -137,7 +137,7 @@ services:
       - LOG_LEVEL=info
       - LOG_HTML=false
       - CAPTCHA_SOLVER=none
-      - TZ=${TZ}      
+      - TZ=${TZ}
   # works as a proxy server
   jackett:
     image: lscr.io/linuxserver/jackett:latest
@@ -171,7 +171,7 @@ services:
     volumes:
       - ${CONFIG}/plex/library:/config
       - ${MEDIA_PATH}/series:/tv
-      - ${MEDIA_PATH}/movies:/movies  
+      - ${MEDIA_PATH}/movies:/movies
   # media request management for plex
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
@@ -207,7 +207,7 @@ services:
       - 8096:8096
     volumes:
       - ${CONFIG}/jellyfin:/config
-      - ${MEDIA_PATH}:/media  # Use the MEDIA_PATH variable
+      - ${MEDIA_PATH}:/media # Use the MEDIA_PATH variable
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -222,7 +222,7 @@ services:
     volumes:
       - ${CONFIG}/jellyseerr/:/app/config
     environment:
-      - TZ=${TZ}    
+      - TZ=${TZ}
   # media management
   stash:
     image: stashapp/stash:latest
@@ -237,7 +237,7 @@ services:
         max-size: "2m"
     volumes:
       - ${MEDIA_PATH}:/media
-      - /etc/localtime:/etc/localtime:ro     
+      - /etc/localtime:/etc/localtime:ro
       - ${CONFIG}/stashapp/config:/root/.stash
       - ${CONFIG}/stashapp/data:/data
       - ${CONFIG}/stashapp/metadata:/metadata
@@ -252,7 +252,7 @@ services:
       - STASH_GENERATED=/generated/
       - STASH_METADATA=/metadata/
       - STASH_CACHE=/cache/
-      - STASH_PORT=9999  
+      - STASH_PORT=9999
   # library optimiser
   unmanic:
     container_name: unmanic
@@ -268,7 +268,9 @@ services:
       - ${MEDIA_PATH}:/media
       - ${CONFIG}/unmanic/config:/config
       - ${CONFIG}/unmanic/library:/library
-      - ${CONFIG}/unmanic/cache:/tmp/unmanic    
+      - ${CONFIG}/unmanic/cache:/tmp/unmanic
+    devices:
+      - /dev/dri:/dev/dri
   # clean ui for jellyfin, tmdb, sonarr and radarr. alternative to overserr or jellyseer
   reiverr:
     image: ghcr.io/aleksilassila/reiverr:latest
