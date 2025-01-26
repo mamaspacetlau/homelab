@@ -1,0 +1,23 @@
+services:
+  openproject:
+    image: openproject/openproject:15
+    container_name: openproject
+    ports:
+      - 8181:80
+    restart: always
+    volumes:
+      - ${CONFIG}/openproject/pgdata:/var/openproject/pgdata
+      - ${CONFIG}/openproject/assets:/var/openproject/assets
+    environment:
+      - OPENPROJECT_HOST__NAME=${OPENPROJECT_HOST__NAME}
+      - OPENPROJECT_SECRET_KEY_BASE=${SECRET}
+      - OPENPROJECT_HTTPS=${OPENPROJECT_HTTPS}
+      - OPENPROJECT_DEFAULT__LANGUAGE=en
+      - OPENPROJECT_EMAIL__DELIVERY__METHOD=smtp
+      - OPENPROJECT_SMTP__ADDRESS=${OPENPROJECT_SMTP__ADDRESS}
+      - OPENPROJECT_SMTP__PORT=587
+      - OPENPROJECT_SMTP__DOMAIN=${OPENPROJECT_HOST__NAME}
+      - OPENPROJECT_SMTP__AUTHENTICATION=login
+      - OPENPROJECT_SMTP__USER__NAME=${LOGIN_EMAIL}
+      - OPENPROJECT_SMTP__PASSWORD=${LOGIN_PASSWORD}
+      - OPENPROJECT_SMTP__ENABLE__STARTTLS__AUTO=true
