@@ -14,6 +14,7 @@
 | [**Immich**](https://immich.app)|[`File`](https://github.com/mamaspacetlau/homelab/tree/main/immich)|Self-hosted photo and video management solution.|
 | [**Invoice Ninja**](https://invoiceninja.com)|[`File`](https://)| _Invoice Ninja_ software suites are fast, free, and straightforward without any specialist accountancy knowledge needed to get stuck in.|
 | [**InvoicePlane**](https://invoiceplane.com)| [`File`](https://github.com/mamaspacetlau/homelab/tree/main/invoiceplane) | _InvoicePlane_ is a free and open source application to manage your quotes, invoices, payments and customers. |
+|[**Kimai**](https://www.kimai.org/)|[**File**](https://github.com/mamaspacetlau/homelab/tree/main/kimai)|Time tracking for project-driven teams|
 |[**n8n**](https://n8n.io/)| [`File`](https://github.com/mamaspacetlau/homelab/tree/main/n8n)|The world's most popular workflow automation platform for technical teams|
 |[**Nginx Proxy Manager**](https://nginxproxymanager.com)|[`File`](https://(https://github.com/mamaspacetlau/homelab/tree/main/nginx-proxy-manager))|· Get Connected · Proxy Hosts · Beautiful UI · Free SSL · Docker FTW · Multiple Users.|
 |[**OpenProject**](https://www.openproject.org/)|[`File`](https://github.com/mamaspacetlau/homelab/tree/main/openproject)|Powerful project collaboration features. Project management features support project teams throughout the entire project life cycle.|
