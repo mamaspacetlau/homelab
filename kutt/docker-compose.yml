@@ -1,0 +1,24 @@
+services:
+  server:
+    image: kutt/kutt:latest
+    restart: always
+    volumes:
+      - ${CONFIG}/kutt/db_data_sqlite:/var/lib/kutt
+      - ${CONFIG}/kutt:/kutt/custom
+    environment:
+      DB_FILENAME: ${DB_FILENAME}
+      REDIS_ENABLED: true
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET}
+      DEFAULT_DOMAIN: your.domain.com #no http or https
+    ports:
+      - 3000:3000
+    depends_on:
+      redis:
+        condition: service_started
+  redis:
+    image: redis:alpine
+    restart: always
+    expose:
+      - 6379
