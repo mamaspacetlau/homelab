@@ -7,6 +7,7 @@ services:
       - 7474:7474
     volumes:
       - ${CONFIG}/autobrr:/config
+      - ${DOWNLOAD_PATH}:/downloads
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -22,7 +23,7 @@ services:
       - 6881:6881/udp
     volumes:
       - ${CONFIG}/qbit/:/config
-      - ${MEDIA_PATH}:/media #optional
+      - ${DOWNLOAD_PATH}:/downloads #optional
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -37,7 +38,7 @@ services:
     ports:
       - 8081:8081
     volumes:
-      - ${CONFIG}/metube:/downloads
+      - ${DOWNLOAD_PATH}/metube:/downloads
       #- ${CONFIG}/metube/cookies:/cookies
     environment:
       - PUID=${PUID}
