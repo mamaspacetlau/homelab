@@ -8,7 +8,8 @@ services:
       - 9696:9696
     volumes:
       - ${CONFIG}/prowlarr:/config
-      - ${MEDIA_PATH}:/media/ # Use the MEDIA_PATH variable
+      - ${MEDIA_PATH}:/media # Use the MEDIA_PATH variable
+      - ${DOWNLOAD_PATH}:/downloads
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -22,6 +23,7 @@ services:
       - 7878:7878
     volumes:
       - ${CONFIG}/radarr:/config
+      - ${DOWNLOAD_PATH}:/downloads
       - ${MEDIA_PATH}:/media # Use the MEDIA_PATH variable
     environment:
       - PUID=${PUID}
@@ -36,6 +38,7 @@ services:
       - 8989:8989
     volumes:
       - ${CONFIG}/sonarr:/config
+      - ${DOWNLOAD_PATH}:/downloads
       - ${MEDIA_PATH}:/media # Use the MEDIA_PATH variable
     environment:
       - PUID=${PUID}
@@ -52,6 +55,8 @@ services:
       - ${CONFIG}/bazarr/:/config
       - ${MEDIA_PATH}:/media
     environment:
+      #- PUID=0
+      #- PGID=0
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
@@ -80,6 +85,7 @@ services:
       - UMASK=002
     volumes:
       - ${CONFIG}/whisparr:/config
+      - ${DOWNLOAD_PATH}:/downloads
       - ${MEDIA_PATH}:/media
   # jellyfin user management
   wizarr:
@@ -87,7 +93,7 @@ services:
     image: ghcr.io/wizarrrr/wizarr:latest
     restart: unless-stopped
     volumes:
-      - ${MEDIA_PATH}/wizarr:/data/database
+      - ${CONFIG}/wizarr:/data/database
     ports:
       - 5690:5690
   # custom format
